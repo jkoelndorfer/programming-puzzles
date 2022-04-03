@@ -39,3 +39,27 @@ of the input string. Similarly with a pattern like `.*a*`.
 It didn't help much. This state machine solution is pretty slow.
 I like state machines because I find them easy to grok. I certainly
 think this one is pretty easy to follow.
+
+
+### Dynamic Programming / Recursive Solution
+
+Because the state machine solution was so slow, I thought I would
+investigate a dynamic programming solution. I tend not to reach
+for dynamic programming and recursive solutions because I just
+don't think in a way that lends itself to those approaches.
+
+There is a **lot** of nuance in a dynamic programming solution to this
+problem. Bounds-checking is a bit annoying. Like the state machine
+version, the backtracking on globbing is what needs special attention
+to ensure the solution is performant. In the dynamic programming
+solution, we of course use a memoization for that.
+
+I got tripped up by one pretty big problem that I burned some time
+on. I initialized the `dp_memo` data structure as follows:
+
+```
+dp_memo: List[List[Optional[bool]]] = [[None] * len(p)] * len(s)
+```
+
+See the problem? `dp_memo` contains `s` references to **a single list**.
+Oops!
